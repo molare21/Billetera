@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070707">
+<title>Al Día</title>
+<style>
+:root{
+  --bg:#070707;
+  --panel:#101010;
+  --panel2:#151515;
+  --line:#2a2a2a;
+  --white:#f8f6f1;
+  --muted:#aaa59c;
+  --gold:#efb548;
+  --cream:#f1d49b;
+  --cream2:#f6e4bc;
+  --green:#3fc46a;
+  --greenbg:#0f2919;
+  --red:#ef4b47;
+  --redbg:#2a1010;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif}
+body{min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{
+  max-width:520px;
+  min-height:100vh;
+  margin:0 auto;
+  padding:20px 18px calc(190px + env(safe-area-inset-bottom));
+  background:
+    radial-gradient(circle at 50% -5%, rgba(255,255,255,.025), transparent 26%),
+    linear-gradient(180deg,#070707 0%,#090909 100%);
+}
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:8px 5px 28px;
+}
+.brandWrap{display:flex;align-items:center;gap:13px}
+.brandIcon{width:49px;height:45px;display:block;flex:0 0 auto}
+.wordmark{font-size:34px;line-height:1;font-weight:850;letter-spacing:-1.7px}
+.wordmark .gold{color:var(--gold)}
+.menuBtn{border:0;background:transparent;color:var(--gold);font-size:35px;line-height:1;padding:0}
+
+.dashboard{
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:19px;
+  background:linear-gradient(180deg,#0d0d0d,#0a0a0a);
+}
+.kicker{
+  font-size:12px;
+  letter-spacing:1.05px;
+  font-weight:700;
+  color:#dedad2;
+  text-transform:uppercase;
+}
+.title{
+  margin:7px 0 20px;
+  font-size:32px;
+  line-height:1.04;
+  letter-spacing:-1.4px;
+  font-weight:850;
+}
+.balance{
+  border-radius:20px;
+  padding:18px 20px 20px;
+  color:#070707;
+  background:linear-gradient(135deg,var(--cream2),#efcb82 70%,#f0d79e);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+}
+.balance .label{
+  font-size:16px;
+  font-weight:850;
+  letter-spacing:-.2px;
+}
+.balance .value{
+  font-size:48px;
+  line-height:.98;
+  font-weight:900;
+  letter-spacing:-2.2px;
+  margin-top:5px;
+}
+.alt{
+  margin-top:5px;
+  font-size:11px;
+  color:#6e624d;
+  font-weight:650;
+}
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:13px;
+}
+.stat{
+  position:relative;
+  min-height:105px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(180deg,#121212,#0f0f0f);
+  padding:16px;
+  color:var(--white);
+  text-align:left;
+}
+.stat .label{
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.25px;
+}
+.stat .value{
+  margin-top:11px;
+  font-size:26px;
+  font-weight:850;
+  letter-spacing:-.75px;
+  color:var(--white)!important;
+}
+.stat .arrow{
+  position:absolute;
+  top:14px;
+  right:15px;
+  font-size:28px;
+  font-weight:800;
+}
+.stat .up{color:var(--green)}
+.stat .down{color:var(--red)}
+.stat .alt{color:#807d76}
+
+.receivable{
+  width:100%;
+  margin-top:26px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#101010,#0d0d0d);
+  border-radius:21px;
+  color:var(--white);
+  padding:17px 18px;
+  text-align:left;
+}
+.receivableLeft{display:flex;align-items:center;gap:17px;min-width:0}
+.mega{
+  width:48px;height:48px;flex:0 0 auto;
+  display:grid;place-items:center;
+  color:var(--gold);
+  font-size:31px;
+}
+.receivable .label{
+  font-size:12px;
+  font-weight:750;
+  letter-spacing:.65px;
+}
+.receivable .value{
+  margin-top:5px;
+  font-size:28px;
+  line-height:1;
+  font-weight:850;
+  letter-spacing:-.8px;
+}
+.chev{color:var(--gold);font-size:38px;font-weight:300}
+
+.section{margin-top:27px}
+.sectionHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:11px;
+}
+.sectionHead h2{
+  margin:0;
+  font-size:23px;
+  letter-spacing:-.55px;
+  font-weight:850;
+}
+.sectionHead button{
+  border:0;
+  background:none;
+  color:var(--cream);
+  font-weight:700;
+  font-size:14px;
+}
+.movesCard{
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:#101010;
+  padding:0 16px;
+}
+.move{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:82px;
+  border-bottom:1px solid #282828;
+}
+.move:last-child{border-bottom:0}
+.moveIcon{
+  width:46px;height:46px;border-radius:50%;
+  display:grid;place-items:center;
+  font-size:29px;font-weight:850;flex:0 0 auto;
+}
+.moveIcon.in{background:var(--greenbg);color:var(--green)}
+.moveIcon.out{background:var(--redbg);color:var(--red)}
+.moveBody{min-width:0;flex:1}
+.moveBody b{font-size:18px}
+.moveBody small{display:block;color:#b4b0a9;margin-top:3px;font-size:13px}
+.moveRight{text-align:right}
+.moveRight b{font-size:17px}
+.moveRight small{display:block;margin-top:3px;color:#bbb6ae;font-size:12px}
+.green{color:var(--green)!important}
+.red{color:var(--red)!important}
+.deleteBtn{
+  border:0;
+  background:#1a1a1a;
+  color:#8f8f8f;
+  border-radius:9px;
+  font-size:11px;
+  padding:7px 8px;
+  margin-left:4px;
+}
+.empty{color:#8e8b84;padding:20px 0;font-size:14px}
+
+.monthCard{
+  margin-top:22px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:#101010;
+  padding:16px 18px 18px;
+}
+.monthHead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.monthTitle{display:flex;align-items:center;gap:9px;font-weight:850;font-size:19px}
+.monthIcon{color:var(--gold);font-size:21px}
+.monthName{font-size:13px;color:#d4d0c9;text-transform:capitalize}
+.bar{height:9px;background:#262626;border-radius:99px;overflow:hidden;display:flex;margin:16px 0}
+.barIn{background:var(--green)}
+.barOut{background:var(--red)}
+.monthGrid{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:12px}
+.monthGrid small{color:#c1bdb5;font-size:12px}
+.monthGrid b{display:block;margin-top:4px;font-size:16px}
+.monthGrid .remain{padding-left:14px;border-left:1px solid #343434}
+.monthGrid .remain b{font-size:25px;color:var(--gold);letter-spacing:-.5px}
+
+.quickActions{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:calc(79px + env(safe-area-inset-bottom));
+  width:min(494px,calc(100% - 26px));
+  z-index:55;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  padding:8px;
+  border-radius:22px;
+  background:rgba(8,8,8,.92);
+  border:1px solid rgba(255,255,255,.06);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.quick{
+  border:0;
+  border-radius:18px;
+  color:#070707;
+  min-height:67px;
+  padding:11px 8px;
+  background:linear-gradient(135deg,#f6e3ba,#efc875);
+  font-size:18px;
+  font-weight:850;
+}
+.quick small{display:block;font-size:11px;margin-top:2px;font-weight:700}
+.quick .symbol{font-size:31px;vertical-align:middle;margin-right:9px;font-weight:400}
+
+.bottom{
+  position:fixed;
+  left:50%;transform:translateX(-50%);
+  bottom:0;
+  width:min(520px,100%);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:50;
+  padding:10px 9px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(8,8,8,.97);
+  border-top:1px solid #1f1f1f;
+  backdrop-filter:blur(18px);
+}
+.nav{
+  border:0;background:transparent;color:#8b8b8b;
+  padding:3px 2px;
+  font-size:11px;
+}
+.nav span{display:block;font-size:24px;margin-bottom:4px}
+.navIcon{width:25px;height:25px;display:block;margin:0 auto 5px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav.active{color:var(--gold)}
+
+.view{display:none}
+.view.active{display:block}
+.pageHead{display:flex;align-items:center;gap:12px;margin:4px 0 19px}
+.back{border:0;background:none;color:white;font-size:32px;padding:0}
+.pageHead h2{margin:0;font-size:24px}
+.panel{
+  border:1px solid var(--line);background:#101010;border-radius:21px;padding:17px;
+}
+.panel .big{font-size:29px;font-weight:850;margin-top:6px}
+.fullGold{
+  width:100%;border:0;border-radius:15px;padding:14px;
+  background:linear-gradient(135deg,#f6e3ba,#efc875);
+  color:#080808;font-weight:850;margin-top:14px;
+}
+.campaignCard{
+  border:1px solid var(--line);background:#101010;border-radius:20px;padding:16px;margin-top:12px;
+}
+.flex{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.pill{background:#edbe5f;color:#090909;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:850}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:17px}
+.step{position:relative;padding-top:20px;text-align:center;font-size:8.5px;color:#767676}
+.step:before{content:"";position:absolute;top:3px;left:50%;transform:translateX(-50%);width:11px;height:11px;border-radius:50%;border:1px solid #656565;background:#101010}
+.step.on{color:var(--gold)}
+.step.on:before{background:var(--gold);border-color:var(--gold)}
+.meta{margin-top:13px;color:#999;font-size:12px}
+.advance{width:100%;margin-top:13px;border:1px solid #2c2c2c;border-radius:12px;background:#171717;color:white;padding:11px;font-weight:700}
+.fixedRow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:15px 0;border-bottom:1px solid #292929}
+.fixedRow:last-child{border-bottom:0}
+.fixedRow small{display:block;color:#8f8f8f;margin-top:3px}
+.historyDay{border:1px solid var(--line);background:#101010;border-radius:18px;padding:14px;margin-top:11px}
+.historyTop{display:flex;justify-content:space-between;gap:10px}
+.historyStats{display:flex;gap:13px;color:#8f8f8f;margin-top:7px;font-size:12px}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:flex-end;justify-content:center;z-index:90}
+.sheet{width:min(520px,100%);max-height:91vh;overflow:auto;background:#0b0b0b;border:1px solid #252525;border-radius:28px 28px 0 0;padding:21px 18px calc(28px + env(safe-area-inset-bottom))}
+.sheet h3{font-size:25px;margin:0 0 17px}
+.segment{display:grid;grid-template-columns:1fr 1fr;background:#171717;padding:3px;border-radius:12px;margin-bottom:16px}
+.segment button{border:0;background:none;color:#aaa;padding:10px;border-radius:10px}
+.segment button.active{background:linear-gradient(135deg,#f6e3ba,#efc875);color:#090909;font-weight:850}
+.field{margin:12px 0}
+.field label{display:block;font-size:11px;color:#aaa;margin-bottom:7px}
+.field input,.field select{width:100%;border:1px solid #303030;background:#121212;color:white;border-radius:13px;padding:14px}
+.frequentBlock{display:none;margin:2px 0 16px}
+.frequentHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.frequentHead b{font-size:12px;letter-spacing:.35px}
+.frequentHead small{color:#777;font-size:10px}
+.frequentChips{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 5px;scrollbar-width:none}
+.frequentChips::-webkit-scrollbar{display:none}
+.frequentChip{flex:0 0 auto;border:1px solid #343434;background:#151515;color:#f8f6f1;border-radius:13px;padding:10px 12px;text-align:left;max-width:190px}
+.frequentChip b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frequentChip small{display:block;color:#aaa;margin-top:3px;font-size:11px}
+.rememberRow{display:none;align-items:center;gap:9px;margin:3px 0 14px;color:#b9b5ae;font-size:12px}
+.rememberRow input{width:18px;height:18px;accent-color:#efb548}
+.primary{width:100%;border:0;border-radius:14px;padding:14px;background:linear-gradient(135deg,#f6e3ba,#efc875);color:#080808;font-weight:850;margin-top:8px}
+.cancel{width:100%;border:0;background:none;color:#8f8f8f;padding:14px}
+
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;z-index:100}
+.menu{height:100%;width:82%;max-width:360px;background:#0b0b0b;padding:30px 22px}
+.menuLogo{font-size:28px;font-weight:850;margin-bottom:30px}
+.menu button{width:100%;text-align:left;border:0;background:none;color:white;padding:15px 0;font-size:18px}
+.menu hr{border:0;border-top:1px solid #282828}
+.rateBox{margin-top:13px;border:1px solid #292929;background:#111;border-radius:16px;padding:13px;color:#aaa;font-size:12px}
+.rateBox b{display:block;color:white;font-size:18px;margin-top:4px}
+@media(max-width:390px){
+  .balance .value{font-size:41px}
+  .stat .value{font-size:22px}
+  .monthGrid{grid-template-columns:1fr 1fr}
+  .monthGrid .remain{grid-column:1/-1;border-left:0;border-top:1px solid #303030;padding:12px 0 0}
+}
+
+/* Compact mobile sizing — closer to the reference proportions */
+@media (max-width:600px){
+  .app{padding:14px 14px calc(164px + env(safe-area-inset-bottom));}
+  .header{margin:5px 3px 20px;}
+  .brandWrap{gap:10px}.brandIcon{width:40px;height:37px}.wordmark{font-size:29px}.menuBtn{font-size:30px}
+  .dashboard{border-radius:24px;padding:15px}
+  .kicker{font-size:11px}.title{font-size:27px;margin:6px 0 15px}
+  .balance{border-radius:18px;padding:15px 17px 17px}.balance .label{font-size:14px}.balance .value{font-size:41px}
+  .stats{gap:10px;margin-top:10px}.stat{min-height:88px;border-radius:16px;padding:13px}.stat .label{font-size:11px}.stat .value{font-size:22px;margin-top:8px}.stat .arrow{font-size:24px;top:12px;right:13px}
+  .campaignSummary{margin-top:14px;padding:16px;border-radius:21px}.campaignSummary .icon{font-size:26px}.campaignSummary .label{font-size:11px}.campaignSummary .value{font-size:25px}.chev{font-size:31px}
+  .sectionHead{margin:18px 3px 9px}.sectionHead h3{font-size:20px}.sectionHead button{font-size:13px}
+  .moves{border-radius:20px}.move{padding:12px 13px}.moveIcon{width:42px;height:42px;font-size:25px}.moveBody b{font-size:16px}.moveBody small{font-size:12px}.moveRight b{font-size:15px}.moveRight small{font-size:11px}
+  .monthCard{margin-top:14px;padding:15px;border-radius:21px}.monthTitle{font-size:17px}.monthGrid b{font-size:14px}.monthGrid .remain b{font-size:22px}
+  .quickDock{padding:9px 14px calc(76px + env(safe-area-inset-bottom));gap:10px}.quick{min-height:65px;border-radius:17px;font-size:16px}.quick .symbol{font-size:27px}.quick small{font-size:10px}
+  .bottomNav{height:72px}.nav{font-size:10px}.nav span{font-size:21px}
+}
+
+</style>
+</head>
+<body>
+<main class="app">
+<header class="header">
+  <div class="brandWrap">
+    <svg class="brandIcon" viewBox="0 0 64 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11 18.5L38.5 7.5C42.8 5.8 47.7 8.1 48.9 12.6L50.3 18.5" stroke="#EFB548" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 18.5H47C52.5 18.5 57 23 57 28.5V45.5C57 50.2 53.2 54 48.5 54H14.5C9.8 54 6 50.2 6 45.5V27C6 22.3 9.8 18.5 14.5 18.5" stroke="#EFB548" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M45 29H57V43H45C41.1 43 38 39.9 38 36C38 32.1 41.1 29 45 29Z" stroke="#EFB548" stroke-width="4.2"/>
+      <circle cx="45" cy="36" r="2.5" fill="#EFB548"/>
+    </svg>
+    <div class="wordmark">al <span class="gold">día</span></div>
+  </div>
+  <button class="menuBtn" onclick="drawer.style.display='block'">☰</button>
+</header>
+
+<section id="home" class="view active">
+  <div class="dashboard">
+    <div class="kicker" id="todayLabel">HOY · 19 DE AGOSTO</div>
+    <h1 class="title">¿Cómo va tu día?</h1>
+
+    <div class="balance">
+      <div class="label">ME QUEDÓ HOY</div>
+      <div id="balanceCOP" class="value">$0</div>
+      <div id="balanceUSD" class="alt"></div>
+    </div>
+
+    <div class="stats">
+      <button class="stat" onclick="openEntry('income')">
+        <div class="label">GANÉ HOY</div>
+        <div class="arrow up">↗</div>
+        <div id="incomeCOP" class="value">$0</div>
+        <div id="incomeUSD" class="alt"></div>
+      </button>
+      <button class="stat" onclick="openEntry('expense')">
+        <div class="label">GASTÉ HOY</div>
+        <div class="arrow down">↘</div>
+        <div id="expenseCOP" class="value">$0</div>
+        <div id="expenseUSD" class="alt"></div>
+      </button>
+    </div>
+  </div>
+
+  <button class="receivable" onclick="go('campaigns')">
+    <div class="receivableLeft">
+      <div class="mega">📣</div>
+      <div>
+        <div class="label">POR COBRAR EN CAMPAÑAS</div>
+        <div id="receivableCOP" class="value">$0</div>
+        <div id="receivableUSD" class="alt" style="color:#827d73"></div>
+      </div>
+    </div>
+    <div class="chev">›</div>
+  </button>
+
+  <div class="section">
+    <div class="sectionHead">
+      <h2>Movimientos de hoy</h2>
+      <button onclick="go('history')">Ver todos</button>
+    </div>
+    <div id="todayMoves" class="movesCard"></div>
+  </div>
+
+  <div class="monthCard">
+    <div class="monthHead">
+      <div class="monthTitle"><span class="monthIcon">▣</span>Resumen del mes</div>
+      <div id="monthName" class="monthName"></div>
+    </div>
+    <div class="bar"><div id="barIn" class="barIn"></div><div id="barOut" class="barOut"></div></div>
+    <div class="monthGrid">
+      <div><small>● Ingresos</small><b id="monthIncome">$0</b></div>
+      <div><small>● Gastos</small><b id="monthExpense">$0</b></div>
+      <div class="remain"><small>Me queda</small><b id="monthBalance">$0</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="campaigns" class="view">
+  <div class="pageHead"><button class="back" onclick="go('home')">‹</button><h2>Campañas</h2></div>
+  <div class="panel">
+    <div class="kicker">POR COBRAR</div>
+    <div id="campaignTotalCOP" class="big">$0</div>
+    <div id="campaignTotalUSD" class="alt" style="color:#8c887f"></div>
+    <div class="meta">Cerrado, pero todavía no cobrado.</div>
+  </div>
+  <button class="fullGold" onclick="campaignModal.style.display='flex'">＋ Nueva campaña</button>
+  <div id="campaignList"></div>
+</section>
+
+<section id="fixed" class="view">
+  <div class="pageHead"><button class="back" onclick="go('home')">‹</button><h2 id="fixedHeading">Gastos fijos</h2></div>
+  <div class="panel">
+    <div class="kicker">TOTAL MENSUAL</div>
+    <div id="fixedTotalCOP" class="big">$0</div>
+    <div id="fixedTotalUSD" class="alt" style="color:#8c887f"></div>
+  </div>
+  <button class="fullGold" onclick="fixedModal.style.display='flex'">＋ Añadir</button>
+  <div id="fixedList" class="panel" style="margin-top:12px"></div>
+</section>
+
+<section id="history" class="view">
+  <div class="pageHead"><button class="back" onclick="go('home')">‹</button><h2>Historial</h2></div>
+  <div class="panel">
+    <div class="kicker">ESTE MES</div>
+    <div id="historyMonthBalance" class="big">$0</div>
+    <div id="historyMonthUSD" class="alt" style="color:#8c887f"></div>
+  </div>
+  <div id="historyList"></div>
+</section>
+</main>
+
+<div class="quickActions" id="quickActions">
+  <button class="quick" onclick="openEntry('income')"><span class="symbol">＋</span>Ingresar<small>(dinero que ganas)</small></button>
+  <button class="quick" onclick="openEntry('expense')"><span class="symbol">−</span>Gastar<small>(dinero que sales)</small></button>
+</div>
+
+<nav class="bottom">
+  <button class="nav active" data-view="home" onclick="go('home')">
+    <svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 10.5L12 3l9 7.5"></path>
+      <path d="M5 9.5V21h14V9.5"></path>
+      <path d="M9.5 21v-6h5v6"></path>
+    </svg>
+    Hoy
+  </button>
+
+  <button class="nav" data-view="campaigns" onclick="go('campaigns')">
+    <svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 11v2"></path>
+      <path d="M6 10l11-4v12L6 14z"></path>
+      <path d="M6 14l2 5h3l-2-6"></path>
+      <path d="M17 9c1.7.8 2.7 2 3 3"></path>
+    </svg>
+    Campañas
+  </button>
+
+  <button class="nav" data-view="fixed" onclick="openFixed('expenses')">
+    <svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="4" y="5" width="16" height="15" rx="2"></rect>
+      <path d="M8 3v4M16 3v4M4 10h16"></path>
+      <path d="M8 14h3M13 14h3M8 17h3"></path>
+    </svg>
+    Gastos fijos
+  </button>
+
+  <button class="nav" data-view="fixed" onclick="openFixed('income')">
+    <svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 9h18"></path>
+      <path d="M5 9v10M9 9v10M15 9v10M19 9v10"></path>
+      <path d="M2 21h20"></path>
+      <path d="M12 3L2.5 8h19z"></path>
+    </svg>
+    Ingresos fijos
+  </button>
+</nav>
+
+<div id="drawer" class="drawer" onclick="if(event.target===this)this.style.display='none'">
+  <div class="menu">
+    <div class="menuLogo">al <span style="color:var(--gold)">día</span></div>
+    <button onclick="go('home')">⌂ Hoy</button>
+    <button onclick="go('history')">▣ Historial</button>
+    <button onclick="go('campaigns')">⚑ Campañas</button>
+    <button onclick="openFixed('expenses')">▣ Gastos fijos</button>
+    <button onclick="openFixed('income')">▤ Ingresos fijos</button>
+    <hr>
+    <button onclick="rateModal.style.display='flex'">⇄ Tasa USD/COP</button>
+    <div class="rateBox">Tasa guardada<b id="menuRate"></b><span id="rateStatus"></span></div>
+  </div>
+</div>
+
+<div id="entryModal" class="overlay">
+  <div class="sheet">
+    <h3>Nuevo movimiento</h3>
+    <div class="segment">
+      <button id="segIncome" class="active" onclick="setEntryType('income')">Ingresar</button>
+      <button id="segExpense" onclick="setEntryType('expense')">Gastar</button>
+    </div>
+
+    <div id="frequentBlock" class="frequentBlock">
+      <div class="frequentHead">
+        <b>FRECUENTES</b>
+        <small>Toca para rellenar</small>
+      </div>
+      <div id="frequentChips" class="frequentChips"></div>
+    </div>
+
+    <div class="field"><label>MONEDA</label><select id="entryCurrency"><option value="COP">COP · Pesos</option><option value="USD">USD · Dólares</option></select></div>
+    <div class="field"><label>MONTO</label><input id="entryAmount" type="number" inputmode="decimal" placeholder="0"></div>
+    <div class="field"><label>CONCEPTO</label><input id="entryConcept" placeholder="Ej. Kick, Uber, Juan Valdez..."></div>
+    <label id="rememberRow" class="rememberRow">
+      <input id="rememberExpense" type="checkbox">
+      Recordar este gasto en “Frecuentes”
+    </label>
+    <button class="primary" onclick="saveEntry()">Guardar</button>
+    <button class="cancel" onclick="entryModal.style.display='none'">Cancelar</button>
+  </div>
+</div>
+
+<div id="campaignModal" class="overlay">
+  <div class="sheet">
+    <h3>Nueva campaña</h3>
+    <div class="field"><label>MARCA / CAMPAÑA</label><input id="campaignBrand" placeholder="Ej. Crocs"></div>
+    <div class="field"><label>MONEDA</label><select id="campaignCurrency"><option value="COP">COP · Pesos</option><option value="USD">USD · Dólares</option></select></div>
+    <div class="field"><label>VALOR</label><input id="campaignAmount" type="number" inputmode="decimal" placeholder="0"></div>
+    <div class="field"><label>ESTADO</label><select id="campaignStatus"><option>Por firmar</option><option>Contrato firmado</option><option>Facturada</option><option>Pago pendiente</option></select></div>
+    <div class="field"><label>PAGAN EN</label><select id="campaignDays"><option>30</option><option>45</option><option selected>60</option><option>90</option></select></div>
+    <button class="primary" onclick="saveCampaign()">Guardar campaña</button>
+    <button class="cancel" onclick="campaignModal.style.display='none'">Cancelar</button>
+  </div>
+</div>
+
+<div id="fixedModal" class="overlay">
+  <div class="sheet">
+    <h3>Nuevo fijo</h3>
+    <div class="field"><label>CONCEPTO</label><input id="fixedConcept" placeholder="Ej. Arriendo"></div>
+    <div class="field"><label>MONEDA</label><select id="fixedCurrency"><option value="COP">COP · Pesos</option><option value="USD">USD · Dólares</option></select></div>
+    <div class="field"><label>VALOR MENSUAL</label><input id="fixedAmount" type="number" inputmode="decimal"></div>
+    <div class="field"><label>DÍA DEL MES</label><input id="fixedDay" type="number" inputmode="numeric" min="1" max="31"></div>
+    <button class="primary" onclick="saveFixed()">Guardar</button>
+    <button class="cancel" onclick="fixedModal.style.display='none'">Cancelar</button>
+  </div>
+</div>
+
+<div id="rateModal" class="overlay">
+  <div class="sheet">
+    <h3>Tasa USD/COP</h3>
+    <div class="field"><label>1 USD = ¿CUÁNTOS COP?</label><input id="rateInput" type="number" inputmode="decimal"></div>
+    <button class="primary" onclick="saveRate()">Guardar tasa</button>
+    <button class="primary" style="background:#1a1a1a;color:white" onclick="fetchRate()">Actualizar automáticamente</button>
+    <button class="cancel" onclick="rateModal.style.display='none'">Cancelar</button>
+  </div>
+</div>
+
+<script>
+const KEY='aldia-v3';
+const DEFAULT_RATE=4000;
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{
+  entries:[],campaigns:[],fixedExpenses:[],fixedIncome:[],
+  rate:DEFAULT_RATE,rateUpdated:null
+};
+if(!Array.isArray(data.expensePresets)) data.expensePresets=[];
+let entryType='income', fixedType='expenses';
+const $=id=>document.getElementById(id);
+
+function iso(d=new Date()){
+  const local=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+  return local.toISOString().slice(0,10);
+}
+function moneyCOP(n){return new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(n||0)}
+function moneyUSD(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(n||0)}
+function toCOP(a,c){return c==='USD'?a*data.rate:a}
+function toUSD(a,c){return c==='USD'?a:a/data.rate}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function persist(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function go(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  $(id).classList.add('active');
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.view===id));
+  $('quickActions').style.display=id==='home'?'grid':'none';
+  drawer.style.display='none';
+  render();
+}
+function setEntryType(t){
+  entryType=t;
+  $('segIncome').classList.toggle('active',t==='income');
+  $('segExpense').classList.toggle('active',t==='expense');
+  $('frequentBlock').style.display=t==='expense'?'block':'none';
+  $('rememberRow').style.display=t==='expense'?'flex':'none';
+  if(t==='expense') renderFrequentExpenses();
+}
+function openEntry(t){
+  setEntryType(t);
+  $('rememberExpense').checked=false;
+  entryModal.style.display='flex';
+}
+function openFixed(t){fixedType=t;go('fixed')}
+
+function frequentKey(concept,currency){
+  return (String(concept||'').trim().toLowerCase()+'|'+currency);
+}
+function saveExpensePreset(concept,amount,currency){
+  const key=frequentKey(concept,currency);
+  const existing=data.expensePresets.find(x=>frequentKey(x.concept,x.currency)===key);
+  if(existing){
+    existing.amount=amount;
+    existing.lastUsed=Date.now();
+    existing.pinned=true;
+  }else{
+    data.expensePresets.unshift({
+      id:Date.now()+Math.random(),
+      concept,
+      amount,
+      currency,
+      pinned:true,
+      lastUsed:Date.now()
+    });
+  }
+}
+function getFrequentExpenses(){
+  const map=new Map();
+
+  // Explicitly remembered expenses always appear first.
+  data.expensePresets.forEach(p=>{
+    map.set(frequentKey(p.concept,p.currency),{
+      concept:p.concept,amount:p.amount,currency:p.currency,
+      score:1000+(p.lastUsed||0)/1e13,pinned:true
+    });
+  });
+
+  // The app also learns repeated day-to-day expenses automatically.
+  data.entries.filter(e=>e.type==='expense').forEach(e=>{
+    const key=frequentKey(e.concept,e.currency);
+    const row=map.get(key)||{
+      concept:e.concept,amount:e.amount,currency:e.currency,
+      score:0,count:0,last:0,pinned:false
+    };
+    row.count=(row.count||0)+1;
+    row.amount=e.amount; // Most recent amount wins.
+    row.last=Math.max(row.last||0,Date.parse(e.createdAt||e.date)||0);
+    if(!row.pinned) row.score=(row.count*10)+(row.last/1e13);
+    map.set(key,row);
+  });
+
+  return [...map.values()]
+    .filter(x=>x.pinned || (x.count||0)>=2)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,8);
+}
+function useFrequentExpense(i){
+  const item=getFrequentExpenses()[i];
+  if(!item)return;
+  $('entryConcept').value=item.concept;
+  $('entryAmount').value=item.amount;
+  $('entryCurrency').value=item.currency;
+}
+function renderFrequentExpenses(){
+  const items=getFrequentExpenses();
+  $('frequentChips').innerHTML=items.length
+    ? items.map((x,i)=>`<button type="button" class="frequentChip" onclick="useFrequentExpense(${i})"><b>${esc(x.concept)}</b><small>${x.currency==='USD'?moneyUSD(x.amount):moneyCOP(x.amount)}</small></button>`).join('')
+    : `<div style="color:#777;font-size:12px;padding:7px 1px">Cuando repitas un gasto, aparecerá aquí.</div>`;
+}
+function saveEntry(){
+  const amount=+$('entryAmount').value,currency=$('entryCurrency').value,concept=$('entryConcept').value.trim();
+  if(!amount)return;
+  const finalConcept=concept||'Sin concepto';
+  data.entries.unshift({id:Date.now(),type:entryType,amount,currency,concept:finalConcept,date:iso(),createdAt:new Date().toISOString()});
+  if(entryType==='expense' && $('rememberExpense').checked && finalConcept!=='Sin concepto'){
+    saveExpensePreset(finalConcept,amount,currency);
+  }
+  $('entryAmount').value='';
+  $('entryConcept').value='';
+  $('rememberExpense').checked=false;
+  entryModal.style.display='none';
+  persist();
+}
+function deleteEntry(id){
+  if(confirm('¿Borrar este movimiento?')){data.entries=data.entries.filter(e=>e.id!==id);persist()}
+}
+function addDays(n){const d=new Date();d.setDate(d.getDate()+n);return iso(d)}
+function saveCampaign(){
+  const brand=$('campaignBrand').value.trim(),amount=+$('campaignAmount').value,currency=$('campaignCurrency').value,status=$('campaignStatus').value,days=+$('campaignDays').value;
+  if(!brand||!amount)return;
+  data.campaigns.unshift({id:Date.now(),brand,amount,currency,status,days,closed:iso(),due:(status==='Facturada'||status==='Pago pendiente')?addDays(days):null});
+  campaignModal.style.display='none';$('campaignBrand').value='';$('campaignAmount').value='';persist();
+}
+function advanceCampaign(id){
+  const order=['Por firmar','Contrato firmado','Facturada','Pago pendiente','Pagada'];
+  const c=data.campaigns.find(x=>x.id===id);
+  const next=order[Math.min(order.indexOf(c.status)+1,4)];
+  c.status=next;
+  if(next==='Facturada'&&!c.due)c.due=addDays(c.days);
+  if(next==='Pagada')data.entries.unshift({id:Date.now(),type:'income',amount:c.amount,currency:c.currency,concept:c.brand+' · campaña',date:iso(),createdAt:new Date().toISOString()});
+  persist();
+}
+function deleteCampaign(id){
+  if(confirm('¿Borrar esta campaña?')){data.campaigns=data.campaigns.filter(c=>c.id!==id);persist()}
+}
+function saveFixed(){
+  const concept=$('fixedConcept').value.trim(),amount=+$('fixedAmount').value,currency=$('fixedCurrency').value,day=+$('fixedDay').value;
+  if(!concept||!amount||day<1||day>31)return;
+  (fixedType==='expenses'?data.fixedExpenses:data.fixedIncome).unshift({id:Date.now(),concept,amount,currency,day});
+  fixedModal.style.display='none';$('fixedConcept').value='';$('fixedAmount').value='';$('fixedDay').value='';persist();
+}
+function deleteFixed(id){
+  if(confirm('¿Borrar este registro fijo?')){
+    if(fixedType==='expenses')data.fixedExpenses=data.fixedExpenses.filter(x=>x.id!==id);
+    else data.fixedIncome=data.fixedIncome.filter(x=>x.id!==id);
+    persist();
+  }
+}
+function saveRate(){
+  const r=+$('rateInput').value;if(!r)return;
+  data.rate=r;data.rateUpdated='manual · '+new Date().toLocaleString('es-CO');rateModal.style.display='none';persist();
+}
+async function fetchRate(){
+  try{
+    const res=await fetch('https://open.er-api.com/v6/latest/USD');
+    const json=await res.json();
+    if(json?.rates?.COP){
+      data.rate=json.rates.COP;
+      data.rateUpdated='automática · '+new Date().toLocaleString('es-CO');
+      $('rateInput').value=Math.round(data.rate*100)/100;
+      persist();
+    }
+  }catch(e){}
+}
+function render(){
+  const now=new Date();
+  $('todayLabel').textContent=('HOY · '+new Intl.DateTimeFormat('es-CO',{day:'numeric',month:'long'}).format(now)).toUpperCase();
+  $('monthName').textContent=new Intl.DateTimeFormat('es-CO',{month:'long'}).format(now);
+  $('rateInput').value=Math.round(data.rate*100)/100;
+  $('menuRate').textContent='1 USD = '+moneyCOP(data.rate);
+  $('rateStatus').textContent=data.rateUpdated||'Sin actualizar';
+  renderFrequentExpenses();
+
+  const today=data.entries.filter(e=>e.date===iso());
+  const inc=today.filter(e=>e.type==='income').reduce((a,e)=>a+toCOP(e.amount,e.currency),0);
+  const exp=today.filter(e=>e.type==='expense').reduce((a,e)=>a+toCOP(e.amount,e.currency),0);
+  $('incomeCOP').textContent=moneyCOP(inc);$('incomeUSD').textContent='≈ '+moneyUSD(inc/data.rate);
+  $('expenseCOP').textContent=moneyCOP(exp);$('expenseUSD').textContent='≈ '+moneyUSD(exp/data.rate);
+  $('balanceCOP').textContent=moneyCOP(inc-exp);$('balanceUSD').textContent='≈ '+moneyUSD((inc-exp)/data.rate);
+
+  const open=data.campaigns.filter(c=>c.status!=='Pagada');
+  const rec=open.reduce((a,c)=>a+toCOP(c.amount,c.currency),0);
+  $('receivableCOP').textContent=$('campaignTotalCOP').textContent=moneyCOP(rec);
+  $('receivableUSD').textContent=$('campaignTotalUSD').textContent='≈ '+moneyUSD(rec/data.rate);
+
+  $('todayMoves').innerHTML=today.length?today.map(e=>{
+    const cop=toCOP(e.amount,e.currency),usd=cop/data.rate;
+    return `<div class="move">
+      <div class="moveIcon ${e.type==='income'?'in':'out'}">${e.type==='income'?'↑':'↓'}</div>
+      <div class="moveBody"><b>${esc(e.concept)}</b><small>${e.type==='income'?'Ganancia':'Gasto'}</small></div>
+      <div class="moveRight"><b class="${e.type==='income'?'green':'red'}">${e.type==='income'?'+':'-'}${e.currency==='USD'?moneyUSD(e.amount):moneyCOP(e.amount)}</b><small>${e.currency==='USD'?moneyCOP(cop):moneyUSD(usd)}</small></div>
+      <button class="deleteBtn" onclick="deleteEntry(${e.id})">×</button>
+    </div>`;
+  }).join(''):'<div class="empty">Todavía no has anotado nada hoy.</div>';
+
+  const mp=iso().slice(0,7);
+  const month=data.entries.filter(e=>e.date.startsWith(mp));
+  const mIn=month.filter(e=>e.type==='income').reduce((a,e)=>a+toCOP(e.amount,e.currency),0);
+  const mOut=month.filter(e=>e.type==='expense').reduce((a,e)=>a+toCOP(e.amount,e.currency),0);
+  $('monthIncome').textContent=moneyCOP(mIn);$('monthExpense').textContent=moneyCOP(mOut);$('monthBalance').textContent=moneyCOP(mIn-mOut);
+  const total=mIn+mOut||1;$('barIn').style.width=(mIn/total*100)+'%';$('barOut').style.width=(mOut/total*100)+'%';
+
+  const order=['Por firmar','Contrato firmado','Facturada','Pago pendiente','Pagada'];
+  $('campaignList').innerHTML=data.campaigns.length?data.campaigns.map(c=>{
+    const idx=order.indexOf(c.status);
+    return `<div class="campaignCard">
+      <div class="flex"><div><b style="font-size:18px">${esc(c.brand)}</b><div class="big" style="font-size:23px">${c.currency==='USD'?moneyUSD(c.amount):moneyCOP(c.amount)}</div><div class="alt" style="color:#8c887f">≈ ${c.currency==='USD'?moneyCOP(toCOP(c.amount,c.currency)):moneyUSD(toUSD(c.amount,c.currency))}</div></div><span class="pill">${esc(c.status)}</span></div>
+      <div class="steps">${order.map((s,i)=>`<div class="step ${i<=idx?'on':''}">${s}</div>`).join('')}</div>
+      <div class="meta">Pagan en: ${c.days} días · Pago estimado: ${c.due||'Tras facturar'}</div>
+      ${c.status!=='Pagada'?`<button class="advance" onclick="advanceCampaign(${c.id})">Avanzar estado →</button>`:''}
+      <button class="deleteBtn" style="margin-top:10px" onclick="deleteCampaign(${c.id})">Borrar</button>
+    </div>`;
+  }).join(''):'<div class="empty">No tienes campañas guardadas.</div>';
+
+  const list=fixedType==='expenses'?data.fixedExpenses:data.fixedIncome;
+  $('fixedHeading').textContent=fixedType==='expenses'?'Gastos fijos':'Ingresos fijos';
+  const fixedCOP=list.reduce((a,x)=>a+toCOP(x.amount,x.currency),0);
+  $('fixedTotalCOP').textContent=moneyCOP(fixedCOP);$('fixedTotalUSD').textContent='≈ '+moneyUSD(fixedCOP/data.rate);
+  $('fixedList').innerHTML=list.length?list.map(x=>`<div class="fixedRow"><div><b>${esc(x.concept)}</b><small>Día ${x.day} · ${x.currency}</small></div><div style="text-align:right"><b>${x.currency==='USD'?moneyUSD(x.amount):moneyCOP(x.amount)}</b><br><button class="deleteBtn" onclick="deleteFixed(${x.id})">Borrar</button></div></div>`).join(''):'<div class="empty">No tienes nada guardado.</div>';
+
+  const grouped={};month.forEach(e=>(grouped[e.date]??=[]).push(e));
+  const days=Object.keys(grouped).sort().reverse();
+  $('historyMonthBalance').textContent=moneyCOP(mIn-mOut);$('historyMonthUSD').textContent='≈ '+moneyUSD((mIn-mOut)/data.rate);
+  $('historyList').innerHTML=days.length?days.map(d=>{
+    const es=grouped[d],di=es.filter(e=>e.type==='income').reduce((a,e)=>a+toCOP(e.amount,e.currency),0),de=es.filter(e=>e.type==='expense').reduce((a,e)=>a+toCOP(e.amount,e.currency),0);
+    const pretty=new Intl.DateTimeFormat('es-CO',{weekday:'long',day:'numeric',month:'long'}).format(new Date(d+'T12:00:00'));
+    return `<div class="historyDay"><div class="historyTop"><b>${pretty}</b><b>${moneyCOP(di-de)}</b></div><div class="historyStats"><span>Ingresos ${moneyCOP(di)}</span><span>Gastos ${moneyCOP(de)}</span></div></div>`;
+  }).join(''):'<div class="empty">Todavía no hay historial este mes.</div>';
+}
+render();
+fetchRate();
+let lastDay=iso();
+setInterval(()=>{const d=iso();if(d!==lastDay){lastDay=d;render()}},60000);
+</script>
+</body>
+</html>
