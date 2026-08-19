@@ -1,0 +1,12 @@
+# Secrets / local config
+.env
+.env.*
+api/config.local.php
+private/
+*.secret.php
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
