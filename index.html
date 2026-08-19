@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F3EA" />
+  <title>Al Día</title>
+  <style>
+    :root{
+      --ink:#191919;
+      --gold:#F2B705;
+      --cream:#F7F3EA;
+      --muted:#7d786f;
+      --line:#ded8cd;
+      --white:#fffdf8;
+      --green:#1f9d5a;
+      --red:#d64949;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--cream);
+      color:var(--ink);
+      font-family:ui-rounded,-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif
+    }
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .app{
+      max-width:520px;
+      margin:auto;
+      min-height:100vh;
+      padding:22px 18px 90px;
+    }
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .brand{
+      font-size:29px;
+      font-weight:850;
+      letter-spacing:-1.4px;
+    }
+    .brand span{color:var(--gold)}
+    .hamb{
+      border:0;
+      background:var(--ink);
+      color:white;
+      width:46px;
+      height:46px;
+      border-radius:15px;
+      font-size:21px;
+    }
+    .eyebrow{
+      margin:34px 0 4px;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:1.6px;
+      color:var(--muted);
+      text-transform:uppercase;
+    }
+    h1{
+      font-size:30px;
+      margin:0 0 20px;
+      letter-spacing:-1px;
+    }
+    .hero{
+      background:var(--ink);
+      color:white;
+      border-radius:28px;
+      padding:24px;
+      box-shadow:0 14px 30px #19191918;
+    }
+    .label{
+      font-size:11px;
+      letter-spacing:1.4px;
+      font-weight:800;
+      opacity:.62;
+    }
+    .big{
+      font-size:43px;
+      font-weight:850;
+      letter-spacing:-2px;
+      margin:8px 0 2px;
+    }
+    .sub{
+      font-size:13px;
+      opacity:.65;
+      line-height:1.4;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background:var(--white);
+      border-radius:23px;
+      padding:18px;
+      text-align:left;
+    }
+    .card .num{
+      font-size:22px;
+      font-weight:800;
+      margin:10px 0 16px;
+    }
+    .add{
+      color:#a57900;
+      font-size:13px;
+      font-weight:750;
+    }
+    .campaign{
+      margin-top:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      width:100%;
+    }
+    .campaign .num{font-size:22px;margin:6px 0 0}
+    .section{margin-top:30px}
+    .section h2{
+      font-size:12px;
+      letter-spacing:1.3px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .empty{
+      padding:18px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .movement{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:14px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .movement b{font-size:15px}
+    .movement small{
+      display:block;
+      color:var(--muted);
+      margin-top:4px;
+    }
+    .positive{color:var(--green)}
+    .negative{color:var(--red)}
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:#0008;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      z-index:20;
+    }
+    .sheet{
+      background:var(--cream);
+      width:min(520px,100%);
+      border-radius:28px 28px 0 0;
+      padding:24px 20px 34px;
+      max-height:90vh;
+      overflow:auto;
+    }
+    .sheet h3{
+      font-size:25px;
+      margin:0 0 20px;
+    }
+    .field{margin:12px 0}
+    .field label{
+      display:block;
+      font-size:11px;
+      letter-spacing:1px;
+      font-weight:800;
+      color:var(--muted);
+      margin-bottom:7px;
+    }
+    .field input,.field select{
+      width:100%;
+      border:1px solid var(--line);
+      background:var(--white);
+      padding:15px;
+      border-radius:14px;
+      font-size:17px;
+      color:var(--ink);
+    }
+    .primary{
+      width:100%;
+      border:0;
+      background:var(--ink);
+      color:white;
+      border-radius:15px;
+      padding:15px;
+      font-weight:800;
+      margin-top:8px;
+    }
+    .cancel{
+      width:100%;
+      border:0;
+      background:transparent;
+      padding:14px;
+      color:var(--muted);
+    }
+    .drawer{
+      position:fixed;
+      inset:0;
+      background:#0008;
+      display:none;
+      z-index:30;
+    }
+    .menu{
+      width:80%;
+      max-width:360px;
+      height:100%;
+      background:var(--ink);
+      color:white;
+      padding:34px 24px;
+    }
+    .menu .brand{margin-bottom:34px}
+    .menu button{
+      display:block;
+      width:100%;
+      text-align:left;
+      border:0;
+      background:none;
+      color:white;
+      padding:16px 0;
+      font-size:20px;
+    }
+    .view{display:none}
+    .view.active{display:block}
+    .campaignCard{
+      border:1px solid var(--line);
+      background:var(--white);
+      border-radius:20px;
+      padding:17px;
+      margin:12px 0;
+    }
+    .row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+    }
+    .pill{
+      font-size:11px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:7px 9px;
+      height:max-content;
+      white-space:nowrap;
+    }
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      margin-top:16px;
+      font-size:11px;
+      color:var(--muted);
+    }
+    .advance{
+      border:0;
+      background:#f0eadf;
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      margin-top:14px;
+      font-weight:750;
+    }
+    .back{
+      border:0;
+      background:none;
+      font-size:24px;
+      padding:0;
+    }
+    .gold{color:var(--gold)}
+    .summary{
+      margin-top:14px;
+      border:1px solid var(--line);
+      background:var(--white);
+      border-radius:22px;
+      padding:18px;
+    }
+    .summaryTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    .summaryNums{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:8px;
+      margin-top:14px;
+    }
+    .summaryNums small{color:var(--muted)}
+    .summaryNums b{display:block;margin-top:4px}
+    @media (max-width:380px){
+      .big{font-size:38px}
+      .summaryNums{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="top">
+      <div class="brand">al <span>día</span></div>
+      <button class="hamb" onclick="drawer.style.display='block'" aria-label="Abrir menú">☰</button>
+    </div>
+
+    <section id="home" class="view active">
+      <div class="eyebrow">Hoy</div>
+      <h1 id="date"></h1>
+
+      <div class="hero">
+        <div class="label">ME QUEDÓ HOY</div>
+        <div id="balance" class="big">$0</div>
+        <div class="sub">Lo que realmente entró menos lo que salió.</div>
+      </div>
+
+      <div class="grid">
+        <button class="card" onclick="openEntry('income')">
+          <div class="label">GANÉ</div>
+          <div id="income" class="num">$0</div>
+          <div class="add">+ añadir</div>
+        </button>
+        <button class="card" onclick="openEntry('expense')">
+          <div class="label">GASTÉ</div>
+          <div id="expense" class="num">$0</div>
+          <div class="add">+ añadir</div>
+        </button>
+      </div>
+
+      <button class="card campaign" onclick="go('campaigns')">
+        <div>
+          <div class="label">POR COBRAR EN CAMPAÑAS</div>
+          <div id="receivable" class="num">$0</div>
+        </div>
+        <b>→</b>
+      </button>
+
+      <div class="summary">
+        <div class="summaryTop">
+          <b>Resumen del mes</b>
+          <span id="monthName" class="sub" style="opacity:1;color:var(--muted)"></span>
+        </div>
+        <div class="summaryNums">
+          <div><small>Ingresos</small><b id="monthIncome">$0</b></div>
+          <div><small>Gastos</small><b id="monthExpense">$0</b></div>
+          <div><small>Me queda</small><b id="monthBalance">$0</b></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>MOVIMIENTOS DE HOY</h2>
+        <div id="movements"></div>
+      </div>
+    </section>
+
+    <section id="campaigns" class="view">
+      <div class="eyebrow">Campañas</div>
+      <div class="row">
+        <h1>Por cobrar</h1>
+        <button class="back" onclick="go('home')">←</button>
+      </div>
+      <div id="campaignTotal" class="big" style="font-size:34px">$0</div>
+      <p class="sub" style="color:var(--muted);opacity:1">Cerrado, pero todavía no cobrado.</p>
+      <button class="primary" onclick="campaignModal.style.display='flex'">+ Nueva campaña</button>
+      <div id="campaignList"></div>
+    </section>
+
+    <section id="fixed" class="view">
+      <div class="eyebrow" id="fixedTitle">Gastos fijos</div>
+      <div class="row">
+        <h1 id="fixedTotal">$0</h1>
+        <button class="back" onclick="go('home')">←</button>
+      </div>
+      <button class="primary" onclick="fixedModal.style.display='flex'">+ Añadir</button>
+      <div id="fixedList"></div>
+    </section>
+  </main>
+
+  <div id="drawer" class="drawer" onclick="if(event.target===this)this.style.display='none'">
+    <div class="menu">
+      <div class="brand">al <span class="gold">día</span></div>
+      <button onclick="go('home')">Hoy</button>
+      <button onclick="go('campaigns')">Campañas</button>
+      <button onclick="openFixed('expenses')">Gastos fijos</button>
+      <button onclick="openFixed('income')">Ingresos fijos</button>
+    </div>
+  </div>
+
+  <div id="entryModal" class="overlay">
+    <div class="sheet">
+      <h3 id="entryHeading">¿Cuánto ganaste?</h3>
+      <div class="field">
+        <label>MONTO</label>
+        <input id="entryAmount" inputmode="numeric" type="number" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>CONCEPTO</label>
+        <input id="entryConcept" placeholder="Ej. Kick, Uber..." />
+      </div>
+      <button class="primary" onclick="saveEntry()">Guardar</button>
+      <button class="cancel" onclick="entryModal.style.display='none'">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="campaignModal" class="overlay">
+    <div class="sheet">
+      <h3>Nueva campaña</h3>
+      <div class="field">
+        <label>MARCA / CAMPAÑA</label>
+        <input id="brand" placeholder="Ej. Crocs" />
+      </div>
+      <div class="field">
+        <label>VALOR</label>
+        <input id="campaignAmount" inputmode="numeric" type="number" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>ESTADO</label>
+        <select id="status">
+          <option>Por firmar</option>
+          <option>Contrato firmado</option>
+          <option>Facturada</option>
+          <option>Pago pendiente</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>PAGAN EN</label>
+        <select id="days">
+          <option>30</option>
+          <option>45</option>
+          <option selected>60</option>
+          <option>90</option>
+        </select>
+      </div>
+      <button class="primary" onclick="saveCampaign()">Guardar campaña</button>
+      <button class="cancel" onclick="campaignModal.style.display='none'">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="fixedModal" class="overlay">
+    <div class="sheet">
+      <h3>Nuevo fijo</h3>
+      <div class="field">
+        <label>CONCEPTO</label>
+        <input id="fixedConcept" placeholder="Ej. Arriendo" />
+      </div>
+      <div class="field">
+        <label>VALOR MENSUAL</label>
+        <input id="fixedAmount" type="number" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label>DÍA DEL MES</label>
+        <input id="fixedDay" type="number" inputmode="numeric" min="1" max="31" />
+      </div>
+      <button class="primary" onclick="saveFixed()">Guardar</button>
+      <button class="cancel" onclick="fixedModal.style.display='none'">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    const KEY='aldia-v1';
+    let data=JSON.parse(localStorage.getItem(KEY)||'{"entries":[],"campaigns":[],"fixedExpenses":[],"fixedIncome":[]}');
+    let entryType='income',fixedType='expenses';
+    const $=id=>document.getElementById(id);
+
+    const money=n=>new Intl.NumberFormat('es-CO',{
+      style:'currency',
+      currency:'COP',
+      maximumFractionDigits:0
+    }).format(n||0);
+
+    const iso=(d=new Date())=>{
+      const local=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+      return local.toISOString().slice(0,10)
+    };
+
+    $('date').textContent=new Intl.DateTimeFormat('es-CO',{
+      weekday:'long',
+      day:'numeric',
+      month:'long'
+    }).format(new Date());
+
+    $('monthName').textContent=new Intl.DateTimeFormat('es-CO',{
+      month:'long'
+    }).format(new Date());
+
+    function persist(){
+      localStorage.setItem(KEY,JSON.stringify(data));
+      render();
+    }
+
+    function go(id){
+      document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+      $(id).classList.add('active');
+      drawer.style.display='none';
+      render();
+    }
+
+    function openEntry(t){
+      entryType=t;
+      $('entryHeading').textContent=t==='income'?'¿Cuánto ganaste?':'¿Cuánto gastaste?';
+      entryModal.style.display='flex';
+    }
+
+    function saveEntry(){
+      const amount=+$('entryAmount').value;
+      if(!amount)return;
+      data.entries.unshift({
+        id:Date.now(),
+        type:entryType,
+        amount,
+        concept:$('entryConcept').value.trim()||'Sin concepto',
+        date:iso()
+      });
+      $('entryAmount').value='';
+      $('entryConcept').value='';
+      entryModal.style.display='none';
+      persist();
+    }
+
+    function addDays(n){
+      const d=new Date();
+      d.setDate(d.getDate()+n);
+      return iso(d);
+    }
+
+    function saveCampaign(){
+      const amount=+$('campaignAmount').value;
+      const b=$('brand').value.trim();
+      const s=$('status').value;
+      const n=+$('days').value;
+      if(!amount||!b)return;
+      data.campaigns.unshift({
+        id:Date.now(),
+        brand:b,
+        amount,
+        status:s,
+        days:n,
+        closed:iso(),
+        due:(s==='Facturada'||s==='Pago pendiente')?addDays(n):null
+      });
+      campaignModal.style.display='none';
+      $('brand').value='';
+      $('campaignAmount').value='';
+      persist();
+    }
+
+    function advance(id){
+      const order=['Por firmar','Contrato firmado','Facturada','Pago pendiente','Pagada'];
+      const c=data.campaigns.find(x=>x.id===id);
+      const next=order[Math.min(order.indexOf(c.status)+1,4)];
+      c.status=next;
+      if(next==='Facturada'&&!c.due)c.due=addDays(c.days);
+      if(next==='Pagada'){
+        data.entries.unshift({
+          id:Date.now(),
+          type:'income',
+          amount:c.amount,
+          concept:c.brand+' · campaña',
+          date:iso()
+        });
+      }
+      persist();
+    }
+
+    function openFixed(t){
+      fixedType=t;
+      go('fixed');
+    }
+
+    function saveFixed(){
+      const amount=+$('fixedAmount').value;
+      const day=+$('fixedDay').value;
+      const concept=$('fixedConcept').value.trim();
+      if(!amount||!day||!concept)return;
+      (fixedType==='expenses'?data.fixedExpenses:data.fixedIncome).unshift({
+        id:Date.now(),amount,day,concept
+      });
+      fixedModal.style.display='none';
+      $('fixedConcept').value='';
+      $('fixedAmount').value='';
+      $('fixedDay').value='';
+      persist();
+    }
+
+    function render(){
+      const today=data.entries.filter(e=>e.date===iso());
+      const inc=today.filter(e=>e.type==='income').reduce((a,b)=>a+b.amount,0);
+      const exp=today.filter(e=>e.type==='expense').reduce((a,b)=>a+b.amount,0);
+
+      const open=data.campaigns.filter(c=>c.status!=='Pagada');
+      const rec=open.reduce((a,b)=>a+b.amount,0);
+
+      $('income').textContent=money(inc);
+      $('expense').textContent=money(exp);
+      $('balance').textContent=money(inc-exp);
+      $('receivable').textContent=$('campaignTotal').textContent=money(rec);
+
+      const monthPrefix=iso().slice(0,7);
+      const monthEntries=data.entries.filter(e=>e.date.startsWith(monthPrefix));
+      const mInc=monthEntries.filter(e=>e.type==='income').reduce((a,b)=>a+b.amount,0);
+      const mExp=monthEntries.filter(e=>e.type==='expense').reduce((a,b)=>a+b.amount,0);
+      $('monthIncome').textContent=money(mInc);
+      $('monthExpense').textContent=money(mExp);
+      $('monthBalance').textContent=money(mInc-mExp);
+
+      $('movements').innerHTML=today.length
+        ? today.map(e=>`
+          <div class="movement">
+            <div>
+              <b>${escapeHtml(e.concept)}</b>
+              <small>${e.type==='income'?'Ganancia':'Gasto'}</small>
+            </div>
+            <b class="${e.type==='income'?'positive':'negative'}">
+              ${e.type==='income'?'+':'-'} ${money(e.amount)}
+            </b>
+          </div>
+        `).join('')
+        : '<div class="empty">Todavía no has anotado nada hoy.</div>';
+
+      $('campaignList').innerHTML=data.campaigns.length
+        ? data.campaigns.map(c=>`
+          <div class="campaignCard">
+            <div class="row">
+              <div>
+                <b>${escapeHtml(c.brand)}</b>
+                <div style="font-size:23px;font-weight:800;margin-top:5px">${money(c.amount)}</div>
+              </div>
+              <span class="pill">${escapeHtml(c.status)}</span>
+            </div>
+            <div class="meta">
+              <div>CERRADA<br><b>${c.closed}</b></div>
+              <div>PAGAN EN<br><b>${c.days} días</b></div>
+              <div>PAGO EST.<br><b>${c.due||'Tras facturar'}</b></div>
+            </div>
+            ${c.status!=='Pagada'
+              ? `<button class="advance" onclick="advance(${c.id})">Avanzar estado →</button>`
+              : ''}
+          </div>
+        `).join('')
+        : '<div class="empty">Cuando cierres una campaña, guárdala aquí.</div>';
+
+      const list=fixedType==='expenses'?data.fixedExpenses:data.fixedIncome;
+      $('fixedTitle').textContent=fixedType==='expenses'?'GASTOS FIJOS':'INGRESOS FIJOS';
+      $('fixedTotal').textContent=money(list.reduce((a,b)=>a+b.amount,0));
+      $('fixedList').innerHTML=list.length
+        ? list.map(x=>`
+          <div class="movement">
+            <div>
+              <b>${escapeHtml(x.concept)}</b>
+              <small>Día ${x.day} de cada mes</small>
+            </div>
+            <b>${money(x.amount)}</b>
+          </div>
+        `).join('')
+        : '<div class="empty">No tienes nada guardado todavía.</div>';
+    }
+
+    function escapeHtml(str){
+      return String(str||'').replace(/[&<>"']/g,ch=>({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[ch]));
+    }
+
+    render();
+  </script>
+</body>
+</html>
